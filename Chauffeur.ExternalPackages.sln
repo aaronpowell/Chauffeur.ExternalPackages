@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26127.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Chauffeur.ExternalPackages", "Chauffeur.ExternalPackages\Chauffeur.ExternalPackages.fsproj", "{ED5A73F2-4E2C-4CBD-8370-0CB95B7A3660}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chauffeur.ExternalPackages.Demo", "Chauffeur.ExternalPackages.Demo\Chauffeur.ExternalPackages.Demo.csproj", "{11926EAC-D38A-43F1-A427-4D38A8EC9D56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{ED5A73F2-4E2C-4CBD-8370-0CB95B7A3660}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED5A73F2-4E2C-4CBD-8370-0CB95B7A3660}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED5A73F2-4E2C-4CBD-8370-0CB95B7A3660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11926EAC-D38A-43F1-A427-4D38A8EC9D56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11926EAC-D38A-43F1-A427-4D38A8EC9D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11926EAC-D38A-43F1-A427-4D38A8EC9D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11926EAC-D38A-43F1-A427-4D38A8EC9D56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
