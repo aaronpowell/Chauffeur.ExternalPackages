@@ -3,42 +3,41 @@
 open Chauffeur
 open Chauffeur.Host
 open FSharp.Data
-
-type UmbracoPackages = JsonProvider< "./umbraco-packages.json" >
+open Searcher
+open Downloader
+open System.IO.Abstractions
 
 [<DeliverableNameAttribute("external-package")>]
-type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings) = 
+type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, fileSystem : IFileSystem) = 
     inherit Deliverable(reader, writer)
-    let apiUrl = 
-        sprintf 
-            "https://our.umbraco.org/webapi/packages/v1?pageIndex=%d&pageSize=24&category=%s&query=%s&order=Default&version=%s"
-    let search page category query = UmbracoPackages.AsyncLoad(apiUrl page category query settings.UmbracoVersion)
-    
-    let displayResults (packages : UmbracoPackages.Package []) = 
+    let searchForPackage' = searchForPackage settings.UmbracoVersion
+    let displayResults' = displayResults reader writer
+    let downloadPackage' = downloadPackage writer
+    let savePackage' = savePackage writer
+    let _, chauffeurFolder = settings.TryGetChauffeurDirectory()
+
+    let search list = 
         async { 
-            let printer i (p : UmbracoPackages.Package) = 
-                writer.WriteLine(sprintf "%d) %s (%s)" i p.Name (p.Id.ToString()))
-            packages |> Array.iteri printer
-            do! writer.WriteAsync("Select a package to install> ") |> Async.AwaitTask
-            let! selection = reader.ReadLineAsync() |> Async.AwaitTask
-            do! writer.WriteLineAsync(sprintf "You selected %s" selection) |> Async.AwaitTask
-
-            let selectedPackage = packages.[int selection]
-
-            do! writer.WriteLineAsync(selectedPackage.Id.ToString()) |> Async.AwaitTask
+            let! response = match list with
+                            | q :: "category" :: c :: rest -> searchForPackage' 0 c q
+                            | q :: rest -> searchForPackage' 0 "" q
+                            | _ -> searchForPackage' 0 "" ""
+            let! selectedPackage = displayResults' response.Packages
+            let packageId = selectedPackage.Id.ToString()
+            let! byteArray = downloadPackage' packageId
+            do! savePackage' chauffeurFolder fileSystem.Path packageId byteArray
+            return DeliverableResponse.Continue
         }
     
     override x.Run(command, args) = 
         let list = args |> Array.toList
         async { 
-            do! writer.WriteLineAsync("Here are the results") |> Async.AwaitTask
             match list with
-            | "search" :: q :: "category" :: c :: rest -> let! response = search 0 c q
-                                                          do! displayResults response.Packages
-            | "search" :: q :: rest -> let! response = search 0 "" q
-                                       do! displayResults response.Packages
-            | _ -> let! response = search 0 "" ""
-                   do! displayResults response.Packages
-            return DeliverableResponse.Continue
+            | "search" :: rest -> return! search rest
+            | "download" :: id :: _ ->
+                let! byteArray = downloadPackage' id
+                do! savePackage' chauffeurFolder fileSystem.Path id byteArray
+                return DeliverableResponse.Continue
+            | _ -> return DeliverableResponse.Continue
         }
         |> Async.StartAsTask
