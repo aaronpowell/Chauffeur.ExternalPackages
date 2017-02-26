@@ -29,5 +29,6 @@ let savePackage (writer : TextWriter) chauffeurDirectory (path : PathBase) packa
     async {
         use fileStream = new FileStream (path.Combine (chauffeurDirectory, sprintf "%s.umb" packageId), FileMode.CreateNew)
         do! fileStream.WriteAsync(byteArray, 0, byteArray.Length) |> Async.AwaitTask
-        do! writer.WriteLineAsync("Package saved to the Chauffeur folder and ready for install") |> Async.AwaitTask
+        do! writer.WriteLineAsync("Package saved to the Chauffeur folder and ready for install. Run the following command") |> Async.AwaitTask
+        do! writer.WriteLineAsync(sprintf "external-package install %s" packageId) |> Async.AwaitTask
     }

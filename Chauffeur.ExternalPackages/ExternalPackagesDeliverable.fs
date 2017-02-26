@@ -5,6 +5,7 @@ open Chauffeur.Host
 open FSharp.Data
 open Searcher
 open Downloader
+open Installer
 open System.IO.Abstractions
 
 [<DeliverableNameAttribute("external-package")>]
@@ -38,6 +39,11 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
                 let! byteArray = downloadPackage' id
                 do! savePackage' chauffeurFolder fileSystem.Path id byteArray
                 return DeliverableResponse.Continue
-            | _ -> return DeliverableResponse.Continue
+            | "install" :: id :: _ ->
+                do! install writer fileSystem chauffeurFolder id
+                return DeliverableResponse.Continue
+            | _ -> 
+                do! writer.WriteLineAsync("Command is known, ignoring") |> Async.AwaitTask
+                return DeliverableResponse.Continue
         }
         |> Async.StartAsTask
