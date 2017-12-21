@@ -260,10 +260,6 @@ paket-files/
 __pycache__/
 *.pyc
 
-Umbraco
-Umbraco_Client
-config
 Media
-Views
 **/*/App_Data/TEMP
 **/*/App_Data/NuGetBackup
