@@ -27,7 +27,6 @@ let private unzip (unpackPath : string) packageStream (fs : IFileSystem) =
     stream.GetNextEntry() |> processEntry
     unpackPath
 
-
 let install (writer : TextWriter) (fs : IFileSystem) chauffeurDirectory packageId =
     let packagePath = fs.Path.Combine (chauffeurDirectory, sprintf "%s.umb" packageId)
     async {

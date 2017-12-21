@@ -7,6 +7,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Chauffeur.ExternalPackages"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chauffeur.ExternalPackages.Demo", "Chauffeur.ExternalPackages.Demo\Chauffeur.ExternalPackages.Demo.csproj", "{11926EAC-D38A-43F1-A427-4D38A8EC9D56}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chauffeur.ExternalPackages.UmbracoRepositoryWrapper", "Chauffeur.ExternalPackages.UmbracoRepositoryWrapper\Chauffeur.ExternalPackages.UmbracoRepositoryWrapper.csproj", "{EA48AA7A-7F25-4124-8396-D0D254D3A2C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +23,15 @@ Global
 		{11926EAC-D38A-43F1-A427-4D38A8EC9D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11926EAC-D38A-43F1-A427-4D38A8EC9D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11926EAC-D38A-43F1-A427-4D38A8EC9D56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA48AA7A-7F25-4124-8396-D0D254D3A2C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA48AA7A-7F25-4124-8396-D0D254D3A2C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA48AA7A-7F25-4124-8396-D0D254D3A2C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA48AA7A-7F25-4124-8396-D0D254D3A2C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F041505-0F70-405A-A6DB-04AA31A2A798}
 	EndGlobalSection
 EndGlobal

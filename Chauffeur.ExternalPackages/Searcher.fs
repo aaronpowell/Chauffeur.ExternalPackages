@@ -1,7 +1,6 @@
 ﻿module internal Searcher
 
 open FSharp.Data
-open Chauffeur.Host
 open System.IO
 
 type UmbracoPackages = JsonProvider< "./umbraco-packages.json" >

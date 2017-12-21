@@ -2,7 +2,6 @@
 
 open Chauffeur
 open Chauffeur.Host
-open FSharp.Data
 open Searcher
 open Downloader
 open Installer
@@ -20,8 +19,8 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
     let search list = 
         async { 
             let! response = match list with
-                            | q :: "category" :: c :: rest -> searchForPackage' 0 c q
-                            | q :: rest -> searchForPackage' 0 "" q
+                            | q :: "category" :: c :: _ -> searchForPackage' 0 c q
+                            | q :: _ -> searchForPackage' 0 "" q
                             | _ -> searchForPackage' 0 "" ""
             let! selectedPackage = displayResults' response.Packages
             let packageId = selectedPackage.Id.ToString()
@@ -30,7 +29,7 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
             return DeliverableResponse.Continue
         }
     
-    override x.Run(command, args) = 
+    override __.Run(_, args) = 
         let list = args |> Array.toList
         async { 
             match list with

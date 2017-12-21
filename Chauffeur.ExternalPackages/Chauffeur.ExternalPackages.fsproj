@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,7 +10,7 @@
     <RootNamespace>Chauffeur.ExternalPackages</RootNamespace>
     <AssemblyName>Chauffeur.ExternalPackages</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <TargetFSharpCoreVersion>4.4.1.0</TargetFSharpCoreVersion>
+    <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Name>Chauffeur.ExternalPackages</Name>
     <TargetFrameworkProfile />
@@ -52,16 +52,22 @@
     </Otherwise>
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
-  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <ItemGroup>
+    <ProjectReference Include="..\Chauffeur.ExternalPackages.UmbracoRepositoryWrapper\Chauffeur.ExternalPackages.UmbracoRepositoryWrapper.csproj">
+      <Name>Chauffeur.ExternalPackages.UmbracoRepositoryWrapper</Name>
+      <Project>{ea48aa7a-7f25-4124-8396-d0d254d3a2c0}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Searcher.fs" />
-    <Compile Include="Downloaer.fs" />
+    <Compile Include="Downloader.fs" />
     <Compile Include="Installer.fs" />
     <Compile Include="ExternalPackagesDeliverable.fs" />
-    <Content Include="packages.config" />
     <Content Include="app.config" />
     <None Include="umbraco-packages.json" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AutoMapper">
@@ -74,8 +80,7 @@
       <HintPath>..\packages\UmbracoCms.Core.7.5.10\lib\businesslogic.dll</HintPath>
     </Reference>
     <Reference Include="Chauffeur">
-      <HintPath>..\packages\Chauffeur.0.9.0-version-to-54\lib\net45\Chauffeur.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Chauffeur.0.12.2\lib\net45\Chauffeur.dll</HintPath>
     </Reference>
     <Reference Include="ClientDependency.Core">
       <HintPath>..\packages\ClientDependency.1.9.2\lib\net45\ClientDependency.Core.dll</HintPath>
@@ -96,15 +101,13 @@
       <HintPath>..\packages\Examine.0.1.81\lib\net45\Examine.dll</HintPath>
     </Reference>
     <Reference Include="FSharp.Core">
-      <HintPath>..\packages\FSharp.Core.4.1.0\lib\net40\FSharp.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\FSharp.Core.4.0.0.1\lib\net40\FSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="FSharp.Data">
       <HintPath>..\packages\FSharp.Data.2.3.2\lib\net40\FSharp.Data.dll</HintPath>
     </Reference>
     <Reference Include="FSharp.Data.TypeProviders">
       <HintPath>..\packages\FSharp.Data.TypeProviders.5.0.0.2\lib\net40\FSharp.Data.TypeProviders.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -192,14 +195,12 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SqlServerCe">
       <HintPath>..\packages\UmbracoCms.Core.7.5.10\lib\System.Data.SqlServerCe.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Data.SqlServerCe.Entity">
       <HintPath>..\packages\UmbracoCms.Core.7.5.10\lib\System.Data.SqlServerCe.Entity.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Abstractions">
-      <HintPath>..\packages\System.IO.Abstractions.1.4.0.83\lib\net35\System.IO.Abstractions.dll</HintPath>
+      <HintPath>..\packages\System.IO.Abstractions.1.4.0.93\lib\net35\System.IO.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting">
@@ -212,7 +213,8 @@
     </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ValueTuple">
-      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Helpers">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -273,6 +275,7 @@
       <HintPath>..\packages\UrlRewritingNet.2.0.7\lib\UrlRewritingNet.UrlRewriter.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
