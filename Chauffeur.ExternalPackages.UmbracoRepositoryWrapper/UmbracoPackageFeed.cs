@@ -1,5 +1,7 @@
 ﻿using Chauffeur.ExternalPackages.UmbracoRepositoryWrapper.UmbracoFeed;
 using System;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 
 namespace Chauffeur.ExternalPackages.UmbracoRepositoryWrapper
@@ -10,7 +12,10 @@ namespace Chauffeur.ExternalPackages.UmbracoRepositoryWrapper
 
         public UmbracoPackageFeed()
         {
-            soapClient = new RepositorySoapClient();
+            soapClient = new RepositorySoapClient(
+                new BasicHttpBinding(BasicHttpSecurityMode.None),
+                new EndpointAddress("http://packages.umbraco.org/umbraco/webservices/api/repository.asmx")
+            );
         }
 
         public async Task<byte[]> GetPackagesByVersionAsync(string packageGuid)

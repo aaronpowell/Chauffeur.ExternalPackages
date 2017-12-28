@@ -11,13 +11,17 @@ let apiUrl =
 
 let searchForPackage version page category query = UmbracoPackages.AsyncLoad(apiUrl page category query version)
 
-let displayResults (reader : TextReader) (writer : TextWriter) (packages : UmbracoPackages.Package []) = 
+let displaySearchResults (reader : TextReader) (writer : TextWriter) (packages : UmbracoPackages.Package []) = 
     async { 
         do! writer.WriteLineAsync("Here are the results") |> Async.AwaitTask
         let printer i (p : UmbracoPackages.Package) = 
             writer.WriteLine(sprintf "%d) %s" (i + 1) p.Name)
         packages |> Array.iteri printer
+        do! writer.WriteLineAsync("q) Cancel") |> Async.AwaitTask
         do! writer.WriteAsync("Select a package to install> ") |> Async.AwaitTask
         let! selection = reader.ReadLineAsync() |> Async.AwaitTask
-        return packages.[int selection]
+
+        return match selection with
+                | "q" -> System.Guid.Empty
+                | _ -> packages.[(int selection) - 1].Id
     }

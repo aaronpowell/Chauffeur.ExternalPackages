@@ -64,10 +64,12 @@
     <Compile Include="Searcher.fs" />
     <Compile Include="Downloader.fs" />
     <Compile Include="Installer.fs" />
+    <Compile Include="Categories.fs" />
     <Compile Include="ExternalPackagesDeliverable.fs" />
     <Content Include="app.config" />
     <None Include="umbraco-packages.json" />
     <Content Include="packages.config" />
+    <None Include="package-categories.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AutoMapper">
