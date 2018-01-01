@@ -21,7 +21,7 @@ let internal displayStarterKits (reader : TextReader) (writer : TextWriter) (kit
             writer.WriteLine(sprintf "%d) %s" (i + 1) c.Name)
         kits |> Array.iteri printer
         do! writer.WriteLineAsync("q) Cancel") |> Async.AwaitTask
-        do! writer.WriteLineAsync("Select a kit to installer> ") |> Async.AwaitTask
+        do! writer.WriteAsync("Select a kit to install> ") |> Async.AwaitTask
         let! selection = reader.ReadLineAsync() |> Async.AwaitTask
 
         return match selection with

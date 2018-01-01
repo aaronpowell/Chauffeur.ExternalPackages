@@ -21,6 +21,7 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
     let search list = 
         let handleFoundPackage packageId =
             async {
+                do! writer.WriteLineAsync(sprintf "external-package download %s" packageId) |> Async.AwaitTask
                 let! byteArray = downloadPackage' packageId
                 do! savePackage' packageId byteArray
                 return DeliverableResponse.Continue
@@ -47,7 +48,7 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
                 let! byteArray = downloadPackage' id
                 do! savePackage' id byteArray
                 return DeliverableResponse.Continue
-            | "install" :: id :: _ ->
+            | "unpack" :: id :: _ ->
                 do! packageExpander writer fileSystem chauffeurFolder id
                 return DeliverableResponse.Continue
             | "categories" :: _ ->

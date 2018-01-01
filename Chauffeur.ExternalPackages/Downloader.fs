@@ -6,7 +6,7 @@ open System.IO.Abstractions
 
 let downloadPackage (writer : TextWriter) packageId =
     async {
-        use client = new UmbracoPackageFeed()
+        let client = new UmbracoPackageFeed()
 
         do! writer.WriteLineAsync("Downloading the package from the Umbraco package repo") |> Async.AwaitTask
 
@@ -17,6 +17,6 @@ let savePackage (writer : TextWriter) chauffeurDirectory (path : PathBase) packa
     async {
         use fileStream = new FileStream (path.Combine (chauffeurDirectory, sprintf "%s.umb" packageId), FileMode.CreateNew)
         do! fileStream.WriteAsync(byteArray, 0, byteArray.Length) |> Async.AwaitTask
-        do! writer.WriteLineAsync("Package saved to the Chauffeur folder and ready for install. Run the following command") |> Async.AwaitTask
-        do! writer.WriteLineAsync(sprintf "external-package install %s" packageId) |> Async.AwaitTask
+        do! writer.WriteLineAsync("Package saved to the Chauffeur folder and ready for unpacking. Run the following command") |> Async.AwaitTask
+        do! writer.WriteLineAsync(sprintf "external-package unpack %s" packageId) |> Async.AwaitTask
     }

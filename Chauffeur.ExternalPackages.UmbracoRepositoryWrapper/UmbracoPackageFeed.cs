@@ -6,28 +6,22 @@ using System.Threading.Tasks;
 
 namespace Chauffeur.ExternalPackages.UmbracoRepositoryWrapper
 {
-    public class UmbracoPackageFeed : IDisposable
+    public class UmbracoPackageFeed
     {
-        private readonly RepositorySoapClient soapClient;
-
-        public UmbracoPackageFeed()
-        {
-            soapClient = new RepositorySoapClient(
-                new BasicHttpBinding(BasicHttpSecurityMode.None),
-                new EndpointAddress("http://packages.umbraco.org/umbraco/webservices/api/repository.asmx")
-            );
-        }
-
         public async Task<byte[]> GetPackagesByVersionAsync(string packageGuid)
         {
+            var binding = new BasicHttpBinding(BasicHttpSecurityMode.None)
+            {
+                MaxReceivedMessageSize = int.MaxValue,
+                MaxBufferSize = int.MaxValue,
+                MaxBufferPoolSize = long.MaxValue
+            };
+            var soapClient = new RepositorySoapClient(
+                binding,
+                new EndpointAddress("http://packages.umbraco.org/umbraco/webservices/api/repository.asmx")
+            );
             var response = await soapClient.fetchPackageByVersionAsync(packageGuid, UmbracoFeed.Version.Version41);
             return response.Body.fetchPackageByVersionResult;
-        }
-
-        public void Dispose()
-        {
-            if (soapClient != null)
-                soapClient.Close();
         }
     }
 }

@@ -15,10 +15,10 @@ let displaySearchResults (reader : TextReader) (writer : TextWriter) (packages :
     async { 
         do! writer.WriteLineAsync("Here are the results") |> Async.AwaitTask
         let printer i (p : UmbracoPackages.Package) = 
-            writer.WriteLine(sprintf "%d) %s" (i + 1) p.Name)
+            writer.WriteLine(sprintf "%d) %s (id: %s)" (i + 1) p.Name (p.Id.ToString()))
         packages |> Array.iteri printer
         do! writer.WriteLineAsync("q) Cancel") |> Async.AwaitTask
-        do! writer.WriteAsync("Select a package to install> ") |> Async.AwaitTask
+        do! writer.WriteAsync("Select a package to download> ") |> Async.AwaitTask
         let! selection = reader.ReadLineAsync() |> Async.AwaitTask
 
         return match selection with
