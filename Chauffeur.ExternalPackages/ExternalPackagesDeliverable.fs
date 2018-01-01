@@ -4,8 +4,9 @@ open Chauffeur
 open Chauffeur.Host
 open Searcher
 open Downloader
-open Installer
+open PackageExpander
 open Categories
+open StarterKit
 open System.IO.Abstractions
 
 [<DeliverableNameAttribute("external-package")>]
@@ -14,14 +15,14 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
     let searchForPackage' = searchForPackage settings.UmbracoVersion
     let displaySearchResults' = displaySearchResults reader writer
     let downloadPackage' = downloadPackage writer
-    let savePackage' = savePackage writer
     let _, chauffeurFolder = settings.TryGetChauffeurDirectory()
+    let savePackage' = savePackage writer chauffeurFolder fileSystem.Path
 
     let search list = 
         let handleFoundPackage packageId =
             async {
                 let! byteArray = downloadPackage' packageId
-                do! savePackage' chauffeurFolder fileSystem.Path packageId byteArray
+                do! savePackage' packageId byteArray
                 return DeliverableResponse.Continue
             }
 
@@ -35,7 +36,6 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
             return!
                 if selectedPackage = System.Guid.Empty then async { return DeliverableResponse.Continue }
                 else handleFoundPackage (selectedPackage.ToString())
-            
         }
 
     override __.Run(_, args) = 
@@ -45,16 +45,18 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
             | "search" :: rest -> return! search rest
             | "download" :: id :: _ ->
                 let! byteArray = downloadPackage' id
-                do! savePackage' chauffeurFolder fileSystem.Path id byteArray
+                do! savePackage' id byteArray
                 return DeliverableResponse.Continue
             | "install" :: id :: _ ->
-                do! install writer fileSystem chauffeurFolder id
+                do! packageExpander writer fileSystem chauffeurFolder id
                 return DeliverableResponse.Continue
             | "categories" :: _ ->
                 let! categories = getCategories
                 let! selectedCategory = displayCategoryResults reader writer categories
                 do! writer.WriteLineAsync(sprintf "You selected %s" selectedCategory.Name) |> Async.AwaitTask
                 return! search [selectedCategory.Name]
+            | "starter-kit" :: _ ->
+                return! getStarterKits reader writer settings.UmbracoVersion savePackage'
             | _ ->
                 do! writer.WriteLineAsync("Command is known, ignoring") |> Async.AwaitTask
                 return DeliverableResponse.Continue

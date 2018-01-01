@@ -1,0 +1,9 @@
+﻿[
+    {
+        "Name": "The Starter Kit",
+        "Thumbnail": "/media/wiki/270830/636321809054207609_starterkit-1png.png",
+        "Id": "ced954d1-8c0f-4abe-bdda-99e7a787d052",
+        "SortOrder": 63,
+        "Description": "<p>This is the default starter kit for Umbraco 7.6+.</p>\r\n<p>It contains a simple website that contains many basic features to help get you started including a home page, a blog, a product catalogue, contact page and more.</p>\r\n<p>For release notes see the Release page on GitHub: <a href=\"https://github.com/umbraco/The-Starter-Kit/releases\">https://github.com/umbraco/The-Starter-Kit/releases</a></p>"
+    }
+]

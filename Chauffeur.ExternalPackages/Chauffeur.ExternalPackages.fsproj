@@ -63,13 +63,15 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Searcher.fs" />
     <Compile Include="Downloader.fs" />
-    <Compile Include="Installer.fs" />
+    <Compile Include="PackageExpander.fs" />
     <Compile Include="Categories.fs" />
+    <Compile Include="StarterKit.fs" />
     <Compile Include="ExternalPackagesDeliverable.fs" />
     <Content Include="app.config" />
     <None Include="umbraco-packages.json" />
     <Content Include="packages.config" />
     <None Include="package-categories.json" />
+    <None Include="starter-kit.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AutoMapper">
@@ -82,7 +84,7 @@
       <HintPath>..\packages\UmbracoCms.Core.7.5.10\lib\businesslogic.dll</HintPath>
     </Reference>
     <Reference Include="Chauffeur">
-      <HintPath>..\packages\Chauffeur.0.12.2\lib\net45\Chauffeur.dll</HintPath>
+      <HintPath>..\packages\Chauffeur.0.13.0-package-wi-121\lib\net45\Chauffeur.dll</HintPath>
     </Reference>
     <Reference Include="ClientDependency.Core">
       <HintPath>..\packages\ClientDependency.1.9.2\lib\net45\ClientDependency.Core.dll</HintPath>
@@ -218,6 +220,7 @@
       <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
