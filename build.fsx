@@ -69,16 +69,17 @@ Target "RestoreTestsPackages" (fun _ ->
 
 Target "Build" (fun _ ->
     let setParams defaults =
-        { defaults with
+        let p = { defaults with
             Verbosity = Some(Quiet)
             Targets = ["Build"]
-            ToolPath = "C:\Program Files (x86)\Microsoft Visual Studio\Preview\Enterprise\MSBuild\15.0\Bin\msbuild.exe"
             Properties =
             [
                 "Configuration", buildMode
                 "Optimize", "True"
                 "DebugSymbols", "True"
             ] }
+        if isAppVeyorBuild then p
+        else { p with ToolPath = "C:\Program Files (x86)\Microsoft Visual Studio\Preview\Enterprise\MSBuild\15.0\Bin\msbuild.exe" }
 
     build setParams "./Chauffeur.ExternalPackages.sln"
     |> DoNothing
