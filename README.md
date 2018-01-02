@@ -1,5 +1,12 @@
 # Chauffeur External Package plugin
 
+<img src="./logo.svg" width="64" />
+
+| Build type | Status | NuGet |
+| --- | --- | --- |
+| master | [![Build status](https://ci.appveyor.com/api/projects/status/ih7j4u7yyl7xj6re/branch/master?svg=true)](https://ci.appveyor.com/project/aaronpowell/chauffeur-externalpackages/branch/master) | [![NuGet Badge](https://buildstats.info/nuget/Chauffeur.ExternalPackages)](https://www.nuget.org/packages/Chauffeur.ExternalPackages/) |
+| dev | [![Build status](https://ci.appveyor.com/api/projects/status/ih7j4u7yyl7xj6re?svg=true)](https://ci.appveyor.com/project/aaronpowell/chauffeur-externalpackages) | [![NuGet Badge](https://buildstats.info/nuget/Chauffeur.ExternalPackages?includePreReleases=true)](https://www.nuget.org/packages/Chauffeur.ExternalPackages/1.0.0-CI00021) |
+
 This is an extension for [Chauffeur](https://github.com/aaronpowell/chauffeur) that allows you to install Umbraco packages from the Umbraco package feed without logging into the back office.
 
 The intent is to allow you to programmatically download Umbraco packages so you don't have to check their binaries into source control, and so you can add their DocTypes/etc. using Chauffeur easily.
