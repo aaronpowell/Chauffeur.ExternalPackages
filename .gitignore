@@ -264,3 +264,9 @@ Media
 **/*/App_Data/TEMP
 **/*/App_Data/NuGetBackup
 **/*/App_Data/umbraco.config
+**/*/App_Data/Logs
+
+.fake
+.tools
+.testresults
+.packaging

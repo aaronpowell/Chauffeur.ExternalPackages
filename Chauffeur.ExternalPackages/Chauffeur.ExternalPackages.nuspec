@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Chauffeur.ExternalPackages</id>
+    <version>@build.number@</version>
+    <authors>@authors@</authors>
+    <owners>@authors@</owners>
+    <summary>@summary@</summary>
+    <licenseUrl>https://github.com/aaronpowell/Chauffeur.ExternalPackages/blob/master/License.md</licenseUrl>
+    <projectUrl>https://github.com/aaronpowell/Chauffeur.ExternalPackages/</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/aaronpowell/Chauffeur,ExternalPackages/master/logo_for_nuget.png?sanitize=true</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>@description@</description>
+    <releaseNotes>@releaseNotes@</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>umbraco deployment</tags>
+    <dependencies>
+      <dependency id="UmbracoCms.Core" version="7.2.5" />
+    </dependencies>
+  </metadata>
+</package>
