@@ -1,3 +1,8 @@
+## New in 0.2.0 (2018/01/02)
+
+* Fixing missing NuGet dependencies
+* Adding a way to install starter kits without user interaction
+
 ## New in 0.1.2 (2018/01/02)
 
 * Rewrote the build script to use the proper Fake 5 syntax

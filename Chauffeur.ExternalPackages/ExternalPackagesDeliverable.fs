@@ -56,6 +56,8 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
                 let! selectedCategory = displayCategoryResults reader writer categories
                 do! writer.WriteLineAsync(sprintf "You selected %s" selectedCategory.Name) |> Async.AwaitTask
                 return! search [selectedCategory.Name]
+            | "starter-kit" :: id :: _ ->
+                return! selectStarterKit settings.UmbracoVersion savePackage' id
             | "starter-kit" :: _ ->
                 return! getStarterKits reader writer settings.UmbracoVersion savePackage'
             | _ ->

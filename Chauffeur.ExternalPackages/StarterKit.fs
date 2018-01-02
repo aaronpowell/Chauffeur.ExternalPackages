@@ -18,7 +18,7 @@ let internal displayStarterKits (reader : TextReader) (writer : TextWriter) (kit
     async { 
         do! writer.WriteLineAsync("Here are the results") |> Async.AwaitTask
         let printer i (c : StarterKit.Root) = 
-            writer.WriteLine(sprintf "%d) %s" (i + 1) c.Name)
+            writer.WriteLine(sprintf "%d) %s (id: %s)" (i + 1) c.Name (c.Id.ToString()))
         kits |> Array.iteri printer
         do! writer.WriteLineAsync("q) Cancel") |> Async.AwaitTask
         do! writer.WriteAsync("Select a kit to install> ") |> Async.AwaitTask
@@ -42,6 +42,13 @@ let internal downloadStarterKit version starterKitId =
         return! response.Content.ReadAsByteArrayAsync() |> Async.AwaitTask
     }
 
+let selectStarterKit version savePackage idAsString =
+    async {
+        let! bytes = downloadStarterKit version idAsString
+        do! savePackage idAsString bytes
+        return DeliverableResponse.Continue
+    }
+
 let getStarterKits (reader : TextReader) (writer : TextWriter) version savePackage =
     async {
         let! starterKits = getAvailableStarerKits version
@@ -50,10 +57,5 @@ let getStarterKits (reader : TextReader) (writer : TextWriter) version savePacka
 
         return! match selection with
                 | None -> async { return DeliverableResponse.Continue }
-                | Some id -> async {
-                    let idAsString = id.ToString()
-                    let! bytes = downloadStarterKit version idAsString
-                    do! savePackage idAsString bytes
-                    return DeliverableResponse.Continue
-                }
+                | Some id -> id.ToString() |> selectStarterKit version savePackage
     }
