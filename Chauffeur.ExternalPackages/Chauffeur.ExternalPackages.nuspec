@@ -16,6 +16,8 @@
     <tags>umbraco deployment</tags>
     <dependencies>
       <dependency id="UmbracoCms.Core" version="7.2.5" />
+      <dependency id="FSharp.Core" version="4.0.0.1" />
+      <dependency id="FSharp.Data" version="2.3.2" />
     </dependencies>
   </metadata>
 </package>
