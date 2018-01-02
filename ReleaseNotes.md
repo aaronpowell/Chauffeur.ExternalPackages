@@ -1,3 +1,7 @@
+## New in 0.1.2 (Unreleased)
+
+* Rewrote the build script to use the proper Fake 5 syntax
+
 ## New in 0.1.1 (2018/01/02)
 
 * Cleaning up the NuGet package
