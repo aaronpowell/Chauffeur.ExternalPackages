@@ -265,6 +265,7 @@ Media
 **/*/App_Data/NuGetBackup
 **/*/App_Data/umbraco.config
 **/*/App_Data/Logs
+**/*/App_Data/Chauffeur/*.umb
 
 .fake
 .tools
