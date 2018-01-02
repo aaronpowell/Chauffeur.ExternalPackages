@@ -9,6 +9,20 @@ open Categories
 open StarterKit
 open System.IO.Abstractions
 
+module Async =
+    open System.Threading.Tasks
+
+    let inline awaitPlainTask (task: Task) = 
+        // rethrow exception from preceding task if it fauled
+        let continuation (t : Task) : unit =
+            match t.IsFaulted with
+            | true -> raise t.Exception
+            | _ -> ()
+        task.ContinueWith continuation |> Async.AwaitTask
+
+    let inline StartAsPlainTask (work : Async<unit>) =
+        Task.Factory.StartNew(fun () -> work |> Async.RunSynchronously)
+
 [<DeliverableNameAttribute("external-package")>]
 type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, fileSystem : IFileSystem) = 
     inherit Deliverable(reader, writer)
@@ -65,3 +79,23 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
                 return DeliverableResponse.Continue
         }
         |> Async.StartAsTask
+
+    interface IProvideDirections with
+        member __.Directions() =
+            let output = __.Out
+            async {
+                do! output.WriteLineAsync("external-package") |> Async.AwaitTask
+                do! output.WriteLineAsync("\tDiscover, download and install packages from the Umbraco package feed") |> Async.AwaitTask
+                do! output.WriteLineAsync("Available Operations:") |> Async.AwaitTask
+                do! output.WriteLineAsync("\tsearch <pattern>") |> Async.AwaitTask
+                do! output.WriteLineAsync("\t\tShow the available packages") |> Async.AwaitTask
+                do! output.WriteLineAsync("\tdownload <id>") |> Async.AwaitTask
+                do! output.WriteLineAsync("\t\tDownloads a package with a specific ID from the Umbraco package feed") |> Async.AwaitTask
+                do! output.WriteLineAsync("\tunpack <id>") |> Async.AwaitTask
+                do! output.WriteLineAsync("\t\tUnpacks an Umbraco package so it can be installed") |> Async.AwaitTask
+                do! output.WriteLineAsync("\tcategories") |> Async.AwaitTask
+                do! output.WriteLineAsync("\t\tList the Umbraco package categories") |> Async.AwaitTask
+                do! output.WriteLineAsync("\tstarter-kit <?id>") |> Async.AwaitTask
+                do! output.WriteLineAsync("\t\tIf the ID is provided it'll download a specific starter kit, otherwise it'll list the available starter kits") |> Async.AwaitTask
+            }
+            |> Async.StartAsPlainTask

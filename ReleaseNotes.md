@@ -2,6 +2,7 @@
 
 * Fixing missing NuGet dependencies
 * Adding a way to install starter kits without user interaction
+* Adding help documentation
 
 ## New in 0.1.2 (2018/01/02)
 
