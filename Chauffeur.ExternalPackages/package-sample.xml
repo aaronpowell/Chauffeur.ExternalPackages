@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<umbPackage>
+    <files>
+        <file>
+            <guid>da3a0f61-8607-4baf-abaa-14319ef82624_SomeFile.dll</guid>
+            <orgPath>~/bin</orgPath>
+            <orgName>SomeFile.dll</orgName>
+        </file>
+        <file>
+            <guid>da3a0f61-8607-4baf-abaa-14319ef82624_SomeFile.dll</guid>
+            <orgPath>~/bin</orgPath>
+            <orgName>SomeFile.dll</orgName>
+        </file>
+    </files>
+    <info>
+        <package>
+            <name>Package Name</name>
+            <version>2.0.0</version>
+            <iconUrl />
+            <license url="http://opensource.org/licenses/MIT">MIT License</license>
+            <url>https://somewhere.com</url>
+            <requirements type="strict">
+                <major>7</major>
+                <minor>7</minor>
+                <patch>0</patch>
+            </requirements>
+        </package>
+        <author>
+            <name>Some Person</name>
+            <website>https://somewhere.com</website>
+        </author>
+        <readme><![CDATA[]]></readme>
+    </info>
+    <Documents>
+        <DocumentSet importMode="root">
+        </DocumentSet>
+    </Documents>
+    <DocumentTypes>
+    </DocumentTypes>
+    <Templates>
+    </Templates>
+    <Stylesheets />
+    <Macros>
+
+    </Macros>
+    <DictionaryItems />
+    <Languages />
+    <DataTypes>
+    </DataTypes>
+    <Actions>
+        <Action runat="install" undo="true" alias="SampleSiteInitialContent">
+            <mediaItem folder="design" name="Umbraco Campari Meeting Room" path="/media/1030/16403439029_f500be349b_o.jpg" key="3d758b1f-24ec-47b0-a75c-225b0444991b" updateDocPath="//home" updatePropertyAlias="heroBackgroundImage" />
+        </Action>
+        <Action runat="install" undo="true" alias="SampleSiteInitialContent">
+            <mediaItem folder="design" name="Umbraco Campari Meeting Room" path="/media/1030/16403439029_f500be349b_o.jpg" key="3d758b1f-24ec-47b0-a75c-225b0444991b" updateDocPath="//home" updatePropertyAlias="heroBackgroundImage" />
+        </Action>
+        <Action runat="install" undo="true" alias="SampleSiteInitialContent">
+            <mediaItem folder="design" name="Umbraco Campari Meeting Room" path="/media/1030/16403439029_f500be349b_o.jpg" key="3d758b1f-24ec-47b0-a75c-225b0444991b" updateDocPath="//home" updatePropertyAlias="heroBackgroundImage" />
+        </Action>
+    </Actions>
+</umbPackage>

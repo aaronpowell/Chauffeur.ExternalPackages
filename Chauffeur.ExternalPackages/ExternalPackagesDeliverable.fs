@@ -7,6 +7,7 @@ open Downloader
 open PackageExpander
 open Categories
 open StarterKit
+open PackageAction
 open System.IO.Abstractions
 
 module Async =
@@ -76,6 +77,11 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
                 return! selectStarterKit settings.UmbracoVersion savePackage' id
             | "starter-kit" :: _ ->
                 return! getStarterKits reader writer settings.UmbracoVersion savePackage'
+            | "actions" :: id :: _ ->
+                fileSystem.Path.Combine(chauffeurFolder, id)
+                |> runPackageAction
+                |> ignore
+                return DeliverableResponse.Continue
             | _ ->
                 do! writer.WriteLineAsync("Command is known, ignoring") |> Async.AwaitTask
                 return DeliverableResponse.Continue

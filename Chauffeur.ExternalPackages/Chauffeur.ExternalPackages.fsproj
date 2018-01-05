@@ -66,6 +66,7 @@
     <Compile Include="PackageExpander.fs" />
     <Compile Include="Categories.fs" />
     <Compile Include="StarterKit.fs" />
+    <Compile Include="PackageAction.fs" />
     <Compile Include="ExternalPackagesDeliverable.fs" />
     <Content Include="app.config" />
     <None Include="umbraco-packages.json" />
@@ -73,6 +74,7 @@
     <None Include="package-categories.json" />
     <None Include="starter-kit.json" />
     <None Include="Chauffeur.ExternalPackages.nuspec" />
+    <Content Include="package-sample.xml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AutoMapper">
@@ -246,6 +248,7 @@
     <Reference Include="System.Web.WebPages.Razor">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="TidyNet">
       <HintPath>..\packages\UmbracoCms.Core.7.5.10\lib\TidyNet.dll</HintPath>
