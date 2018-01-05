@@ -6,16 +6,16 @@ open ICSharpCode.SharpZipLib.Zip
 
 let private notNullOrEmpty = not << System.String.IsNullOrEmpty
 
-let private unzip packageStream (fs : IFileSystem) (unpackPath : DirectoryInfoBase) =
+let private unzip packageStream getFileName (fileCreate: (string -> Stream)) pathCombine (unpackPath : DirectoryInfoBase) =
     use stream = new ZipInputStream(packageStream)
     let rec processEntry (entry : ZipEntry) =
         match entry with
         | null -> ()
         | _ ->
-            let fileName = entry.Name |> fs.Path.GetFileName
+            let fileName = entry.Name |> getFileName
             if (notNullOrEmpty fileName) then
-                use streamWriter = fs.File.Create(fs.Path.Combine(unpackPath.FullName, fileName))
-                let data = Array.init<byte> 2048 (fun x -> byte(0))
+                use streamWriter = fileCreate(pathCombine (unpackPath.FullName, fileName))
+                let data = Array.init<byte> 2048 (fun _ -> byte(0))
                 let rec read size =
                     match size with
                     | 0 -> ()
@@ -42,7 +42,7 @@ let packageExpander (writer : TextWriter) (fs : IFileSystem) chauffeurDirectory 
             | _ -> ()
 
             do! fs.Directory.CreateDirectory(unpackPath)
-                |> unzip (fs.File.OpenRead(packagePath)) fs
+                |> unzip (fs.File.OpenRead(packagePath)) fs.Path.GetFileName fs.File.Create fs.Path.Combine
                 |> (fun p -> async {
                         do! writer.WriteLineAsync("Package has been expanded, next you need to run the 'package' deliverable to install it:") |> Async.AwaitTask
                         do! writer.WriteLineAsync(sprintf "pkg package -f:%s" p.FullName) |> Async.AwaitTask

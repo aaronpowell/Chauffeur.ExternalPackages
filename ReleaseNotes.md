@@ -1,3 +1,9 @@
+## New in 0.3.0 (Unreleased)
+
+* Added support for running package actions
+  * These may fail, if the action depends on `HttpContext` or another dependency that we don't pre-configure
+* Fixed bug with when downloading/unpacking package that has previously been done
+
 ## New in 0.2.0 (2018/01/02)
 
 * Fixing missing NuGet dependencies

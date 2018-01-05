@@ -30,7 +30,9 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
     let displaySearchResults' = displaySearchResults reader writer
     let downloadPackage' = downloadPackage writer
     let _, chauffeurFolder = settings.TryGetChauffeurDirectory()
-    let savePackage' = savePackage writer chauffeurFolder fileSystem.Path
+    let savePackage' id byteArray = 
+        getFilePath chauffeurFolder fileSystem.Path fileSystem.File id
+        |> (fun filePath -> savePackage writer filePath byteArray)
 
     let search list = 
         let handleFoundPackage packageId =
