@@ -80,7 +80,7 @@ Target.Create "RestoreDemoPackages" (fun _ ->
 )
 
 Target.Create "RestoreTestsPackages" (fun _ ->
-    RestorePackage id "./Chauffeur.ExternalPacakges.Tests/packages.config"
+    RestorePackage id "./Chauffeur.ExternalPackages.Tests/packages.config"
 )
 
 Target.Create "Build" (fun _ ->
