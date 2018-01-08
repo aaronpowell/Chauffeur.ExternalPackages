@@ -1,4 +1,4 @@
-﻿namespace Chauffeur.ExternalPackages.AssemblyInfo
+﻿namespace Chauffeur.ExternalPackages.Tests.AssemblyInfo
 
 open System.Reflection
 open System.Runtime.CompilerServices
@@ -7,12 +7,12 @@ open System.Runtime.InteropServices
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[<assembly: AssemblyTitle("Chauffeur.ExternalPackages")>]
+[<assembly: AssemblyTitle("Chauffeur.ExternalPackages.Tests")>]
 [<assembly: AssemblyDescription("")>]
 [<assembly: AssemblyConfiguration("")>]
 [<assembly: AssemblyCompany("")>]
-[<assembly: AssemblyProduct("Chauffeur.ExternalPackages")>]
-[<assembly: AssemblyCopyright("Copyright ©  2017")>]
+[<assembly: AssemblyProduct("Chauffeur.ExternalPackages.Tests")>]
+[<assembly: AssemblyCopyright("Copyright ©  2018")>]
 [<assembly: AssemblyTrademark("")>]
 [<assembly: AssemblyCulture("")>]
 
@@ -22,7 +22,7 @@ open System.Runtime.InteropServices
 [<assembly: ComVisible(false)>]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[<assembly: Guid("ed5a73f2-4e2c-4cbd-8370-0cb95b7a3660")>]
+[<assembly: Guid("d51ad2b2-6ee4-404c-8409-089b94ef46ee")>]
 
 // Version information for an assembly consists of the following four values:
 // 
@@ -36,8 +36,6 @@ open System.Runtime.InteropServices
 // [<assembly: AssemblyVersion("1.0.*")>]
 [<assembly: AssemblyVersion("1.0.0.0")>]
 [<assembly: AssemblyFileVersion("1.0.0.0")>]
-
-[<assembly:InternalsVisibleTo("Chauffeur.ExternalPackages.Tests")>]
 
 do
     ()

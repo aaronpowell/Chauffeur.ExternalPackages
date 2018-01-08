@@ -9,6 +9,7 @@ open Categories
 open StarterKit
 open PackageAction
 open System.IO.Abstractions
+open IOUtils
 
 module Async =
     open System.Threading.Tasks
@@ -27,8 +28,12 @@ module Async =
 [<DeliverableNameAttribute("external-package")>]
 type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, fileSystem : IFileSystem) = 
     inherit Deliverable(reader, writer)
+    let writeLineAsync' = writeLineAsync writer
+    let writeAsync' = writeAsync writer
+    let readLineAsync' = readLineAsync reader
+
     let searchForPackage' = searchForPackage settings.UmbracoVersion
-    let displaySearchResults' = displaySearchResults reader writer
+    let displaySearchResults' = displaySearchResults readLineAsync' writeLineAsync' writeAsync'
     let downloadPackage' = downloadPackage writer
     let _, chauffeurFolder = settings.TryGetChauffeurDirectory()
     let savePackage' id byteArray = 
@@ -52,8 +57,9 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
             let! selectedPackage = displaySearchResults' response.Packages
 
             return!
-                if selectedPackage = System.Guid.Empty then async { return DeliverableResponse.Continue }
-                else handleFoundPackage (selectedPackage.ToString())
+                match selectedPackage with
+                | Some id -> handleFoundPackage (id.ToString())
+                | None -> async { return DeliverableResponse.Continue }
         }
 
     override __.Run(_, args) = 

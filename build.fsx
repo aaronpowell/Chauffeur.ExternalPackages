@@ -80,8 +80,7 @@ Target.Create "RestoreDemoPackages" (fun _ ->
 )
 
 Target.Create "RestoreTestsPackages" (fun _ ->
-    RestorePackage id "./Chauffeur.Tests/packages.config"
-    RestorePackage id "./Chauffeur.Tests.Integration/packages.config"
+    RestorePackage id "./Chauffeur.ExternalPacakges.Tests/packages.config"
 )
 
 Target.Create "Build" (fun _ ->
@@ -102,7 +101,7 @@ Target.Create "Build" (fun _ ->
 )
 
 Target.Create "UnitTests" (fun _ ->
-    !! (sprintf "./Chauffeur.Tests/bin/%s/**/Chauffeur.Tests.dll" buildMode)
+    !! (sprintf "./Chauffeur.ExternalPackages.Tests/bin/%s/**/Chauffeur.ExternalPackages.Tests.dll" buildMode)
     |> xUnit2 (fun p -> { p with HtmlOutputPath = Some (testDir @@ "xunit.html") })
 )
 
@@ -149,7 +148,7 @@ Target.Create "Lint" (fun _ ->
 
 "RestorePackages"
     ==> "RestoreDemoPackages"
-    // ==> "RestoreChauffeurTestsPackages"
+    ==> "RestoreTestsPackages"
     ==> "Build"
 
 "UnitTests"

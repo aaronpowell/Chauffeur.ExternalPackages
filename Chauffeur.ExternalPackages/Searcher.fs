@@ -2,8 +2,9 @@
 
 open FSharp.Data
 open System.IO
+open IOUtils
 
-type UmbracoPackages = JsonProvider< "./umbraco-packages.json" >
+type UmbracoPackages = JsonProvider< "../Chauffeur.ExternalPackages/umbraco-packages.json" >
 
 let apiUrl = 
     sprintf 
@@ -11,17 +12,23 @@ let apiUrl =
 
 let searchForPackage version page category query = UmbracoPackages.AsyncLoad(apiUrl page category query version)
 
-let displaySearchResults (reader : TextReader) (writer : TextWriter) (packages : UmbracoPackages.Package []) = 
+let displaySearchResults readLineAsync writeLineAsync writeAsync (packages : UmbracoPackages.Package []) =
     async { 
-        do! writer.WriteLineAsync("Here are the results") |> Async.AwaitTask
+        do! writeLineAsync("Here are the results")
         let printer i (p : UmbracoPackages.Package) = 
-            writer.WriteLine(sprintf "%d) %s (id: %s)" (i + 1) p.Name (p.Id.ToString()))
-        packages |> Array.iteri printer
-        do! writer.WriteLineAsync("q) Cancel") |> Async.AwaitTask
-        do! writer.WriteAsync("Select a package to download> ") |> Async.AwaitTask
-        let! selection = reader.ReadLineAsync() |> Async.AwaitTask
+            writeLineAsync(sprintf "%d) %s (id: %s)" (i + 1) p.Name (p.Id.ToString()))
+
+        packages
+        |> Array.mapi printer
+        |> Async.Parallel
+        |> Async.RunSynchronously
+        |> ignore
+
+        do! writeLineAsync("q) Cancel")
+        do! writeAsync("Select a package to download> ")
+        let! selection = readLineAsync
 
         return match selection with
-                | "q" -> System.Guid.Empty
-                | _ -> packages.[(int selection) - 1].Id
+                | "q" -> None
+                | _ -> Some(packages.[(int selection) - 1].Id)
     }

@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="IOUtils.fs" />
     <Compile Include="Searcher.fs" />
     <Compile Include="Downloader.fs" />
     <Compile Include="PackageExpander.fs" />
