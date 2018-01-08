@@ -94,9 +94,8 @@ Target.Create "Build" (fun _ ->
                         "Optimize", "True"
                         "DebugSymbols", "True"
                     ] }
-        // if isAppVeyorBuild then p
-        // else { p with ToolPath = "C:\Program Files (x86)\Microsoft Visual Studio\Preview\Enterprise\MSBuild\15.0\Bin\msbuild.exe" }
-        p
+        if isAppVeyorBuild then p
+        else { p with ToolPath = "C:\Program Files (x86)\Microsoft Visual Studio\Preview\Enterprise\MSBuild\15.0\Bin\msbuild.exe" }
 
     build setParams "./Chauffeur.ExternalPackages.sln"
 )
