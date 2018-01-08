@@ -127,8 +127,6 @@ Target.Create "CreateNuGetPackage" (fun _ ->
             ReleaseNotes = String.toLines releaseNotes.Notes
             SymbolPackage = NugetSymbolPackage.None
             AccessKey = environVarOrDefault "nugetkey" ""
-            Dependencies =
-                ["Chauffeur", "0.13.0-package-wi-121"]
             Publish = hasEnvironVar "nugetkey" }) "Chauffeur.ExternalPackages/Chauffeur.ExternalPackages.nuspec"
 )
 
