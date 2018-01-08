@@ -1,14 +1,13 @@
 ﻿module ``Unit tests for then Search Module``
 
 open Xunit
-// open FsUnit.Xunit
-
 open Searcher
 open System
+open FsUnit
 
 type ``Successful Searching``() =
     [<Fact>]
-    member x.``Selection will return appropriate ID``() =
+    member __.``Selection will return appropriate ID``() =
         let testId = "5405a34d-752b-4bcf-b356-4c7c60168902"
         async {
             let packages = UmbracoPackages.Parse(sprintf """{
@@ -39,13 +38,13 @@ type ``Successful Searching``() =
                         )
 
             let readLineAsync = async { return "1" }
-            let writeLineAsync s = async { return () }
-            let writeAsync s = async { return () }
+            let writeLineAsync _ = async { return () }
+            let writeAsync _ = async { return () }
 
             let! selection = displaySearchResults readLineAsync writeLineAsync writeAsync packages.Packages
 
             match selection with
-            | Some value-> Assert.Equal ((Guid.Parse testId), value)
-            | None -> Assert.False(true)
+            | Some value -> value |> should equal (Guid.Parse testId)
+            | None -> false |> should be True
 
-            } |> Async.RunSynchronously
+            }
