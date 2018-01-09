@@ -1,8 +1,8 @@
 #r @".tools/FAKE.Core/tools/FakeLib.dll"
+#r @".tools/FSharpLint.Fake/tools/FSharpLint.Core.dll"
+#r @".tools/FSharpLint.Fake/tools/FSharpLint.Fake.dll"
 open Fake
 open Fake.Core
-#r @".tools/FSharpLint.Fake/tools/FSharpLint.Fake.dll"
-
 open Fake.Core.Environment
 open Fake.Core.Globbing.Operators
 open Fake.Core.TargetOperators
@@ -136,12 +136,12 @@ Target.Create "BuildVersion" (fun _ ->
 Target.Create "Package" Target.DoNothing
 
 Target.Create "Lint" (fun _ ->
-    !! "src/**/*.fsproj"
+    !! "**/*.fsproj"
         |> Seq.iter (FSharpLint id))
 
 "Clean"
     =?> ("BuildVersion", isAppVeyorBuild)
-    ==> "Lint"
+    // ==> "Lint"
     ==> "Build"
 
 "RestorePackages"
