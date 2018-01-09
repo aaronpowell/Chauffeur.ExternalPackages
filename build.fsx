@@ -2,7 +2,7 @@
 #r @".tools/FSharpLint.Fake/tools/FSharpLint.Core.dll"
 #r @".tools/FSharpLint.Fake/tools/FSharpLint.Fake.dll"
 
-#load @".tools/SourceLink.Fake/tools/SourceLink.fsx"
+// #load @".tools/SourceLink.Fake/tools/SourceLink.fsx"
 
 open Fake
 open Fake.Core
@@ -17,7 +17,7 @@ open Fake.IO.FileSystemOperators
 open Fake.DotNet.Testing.XUnit2
 open Fake.Tools
 open FSharpLint.Fake
-open SourceLink
+// open SourceLink
 
 Environment.setEnvironVar "VisualStudioVersion" "15.0"
 
@@ -172,8 +172,9 @@ Target.Create "SourceLink" (fun _ ->
 "UnitTests"
     ==> "Default"
 
-"SourceLink"
-    ==> "CreateNuGetPackage"
+// "SourceLink"
+//    ==>
+"CreateNuGetPackage"
     ==> "Package"
 
 Target.RunOrDefault "Default"
