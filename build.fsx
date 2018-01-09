@@ -145,10 +145,13 @@ Target.Create "Lint" (fun _ ->
         |> Seq.iter (FSharpLint id))
 
 Target.Create "SourceLink" (fun _ ->
+    printfn "testing"
     let baseUrl = sprintf "%s/%s/{0}/%%var2%%" gitRaw "Chauffeur.ExternalPackages"
     !! "**/*.??proj"
     |> Seq.iter (fun projFile ->
-        let proj = VsProj.LoadRelease projFile
+        printfn "Processing %s" projFile
+        let proj = VsProj.Load projFile ["Configuration","Release"; "VisualStudioVersion","15.0"]
+        printfn "Loaded"
         SourceLink.Index proj.CompilesNotLinked proj.OutputFilePdb __SOURCE_DIRECTORY__ baseUrl
     )
 )
@@ -158,8 +161,7 @@ Target.Create "SourceLink" (fun _ ->
     // ==> "Lint"
     ==> "Build"
 
-"SourceLink"
-    ==> "RestorePackages"
+"RestorePackages"
     ==> "RestoreDemoPackages"
     ==> "RestoreTestsPackages"
     ==> "Build"
@@ -170,7 +172,8 @@ Target.Create "SourceLink" (fun _ ->
 "UnitTests"
     ==> "Default"
 
-"CreateNuGetPackage"
+"SourceLink"
+    ==> "CreateNuGetPackage"
     ==> "Package"
 
 Target.RunOrDefault "Default"
