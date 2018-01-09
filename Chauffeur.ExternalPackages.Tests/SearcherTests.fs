@@ -37,7 +37,7 @@ type ``Successful Searching``() =
                             testId
                         )
 
-            let readLineAsync = async { return "1" }
+            let readLineAsync () = async { return "1" }
             let writeLineAsync _ = async { return () }
             let writeAsync _ = async { return () }
 
@@ -78,7 +78,7 @@ type ``Successful Searching``() =
                             }"""
                         )
 
-            let readLineAsync = async { return "q" }
+            let readLineAsync () = async { return "q" }
             let writeLineAsync _ = async { return () }
             let writeAsync _ = async { return () }
 

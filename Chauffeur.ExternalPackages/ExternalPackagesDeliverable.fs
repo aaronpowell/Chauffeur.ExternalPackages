@@ -34,11 +34,11 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
 
     let searchForPackage' = searchForPackage settings.UmbracoVersion
     let displaySearchResults' = displaySearchResults readLineAsync' writeLineAsync' writeAsync'
-    let downloadPackage' = downloadPackage writer
+    let downloadPackage' = downloadPackage writeLineAsync'
     let _, chauffeurFolder = settings.TryGetChauffeurDirectory()
     let savePackage' id byteArray = 
         getFilePath chauffeurFolder fileSystem.Path fileSystem.File id
-        |> (fun filePath -> savePackage writer filePath byteArray)
+        |> (fun filePath -> savePackage writeLineAsync' filePath byteArray id)
 
     let search list = 
         let handleFoundPackage packageId =

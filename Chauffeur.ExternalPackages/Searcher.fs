@@ -26,7 +26,7 @@ let displaySearchResults readLineAsync writeLineAsync writeAsync (packages : Umb
 
         do! writeLineAsync("q) Cancel")
         do! writeAsync("Select a package to download> ")
-        let! selection = readLineAsync
+        let! selection = readLineAsync()
 
         return match selection with
                 | "q" -> None

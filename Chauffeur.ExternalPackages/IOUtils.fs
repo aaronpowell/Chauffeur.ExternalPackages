@@ -8,5 +8,5 @@ let writeLineAsync (writer: TextWriter) (input: string) =
 let writeAsync (writer: TextWriter) (input: string) =
     writer.WriteAsync(input) |> Async.AwaitTask
 
-let readLineAsync (reader: TextReader) =
+let readLineAsync (reader: TextReader) () =
     reader.ReadLineAsync() |> Async.AwaitTask
