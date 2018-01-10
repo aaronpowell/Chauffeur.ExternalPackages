@@ -2,8 +2,6 @@
 #r @".tools/FSharpLint.Fake/tools/FSharpLint.Core.dll"
 #r @".tools/FSharpLint.Fake/tools/FSharpLint.Fake.dll"
 
-// #load @".tools/SourceLink.Fake/tools/SourceLink.fsx"
-
 open Fake
 open Fake.Core
 open Fake.Core.Environment
@@ -17,7 +15,6 @@ open Fake.IO.FileSystemOperators
 open Fake.DotNet.Testing.XUnit2
 open Fake.Tools
 open FSharpLint.Fake
-// open SourceLink
 
 Environment.setEnvironVar "VisualStudioVersion" "15.0"
 
@@ -31,7 +28,6 @@ let isAppVeyorBuild = not (isNull (environVar "APPVEYOR"))
 let projectName = "Chauffeur.ExternalPackages"
 let nugetSummary = "A tool for managing packages from the Umbraco package feed using Chauffeur"
 let nugetDescription = nugetSummary
-let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/aaronpowell"
 
 let releaseNotes =
     File.read "ReleaseNotes.md"
@@ -143,18 +139,6 @@ Target.Create "Package" Target.DoNothing
 Target.Create "Lint" (fun _ ->
     !! "**/*.fsproj"
         |> Seq.iter (FSharpLint id))
-
-Target.Create "SourceLink" (fun _ ->
-    printfn "testing"
-    let baseUrl = sprintf "%s/%s/{0}/%%var2%%" gitRaw "Chauffeur.ExternalPackages"
-    !! "**/*.??proj"
-    |> Seq.iter (fun projFile ->
-        printfn "Processing %s" projFile
-        let proj = VsProj.Load projFile ["Configuration","Release"; "VisualStudioVersion","15.0"]
-        printfn "Loaded"
-        SourceLink.Index proj.CompilesNotLinked proj.OutputFilePdb __SOURCE_DIRECTORY__ baseUrl
-    )
-)
 
 "Clean"
     =?> ("BuildVersion", isAppVeyorBuild)
