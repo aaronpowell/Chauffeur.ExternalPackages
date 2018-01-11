@@ -85,7 +85,7 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
                 return! getStarterKits reader writer settings.UmbracoVersion savePackage'
             | "actions" :: id :: _ ->
                 fileSystem.Path.Combine(chauffeurFolder, id)
-                |> runPackageAction
+                |> runPackageActions
                 |> ignore
                 return DeliverableResponse.Continue
             | _ ->
