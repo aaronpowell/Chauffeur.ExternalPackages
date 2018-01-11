@@ -84,9 +84,15 @@ type ExternalPackagesDeliverable(reader, writer, settings : IChauffeurSettings, 
             | "starter-kit" :: _ ->
                 return! getStarterKits reader writer settings.UmbracoVersion savePackage'
             | "actions" :: id :: _ ->
-                fileSystem.Path.Combine(chauffeurFolder, id)
-                |> runPackageActions
-                |> ignore
+                let! results = fileSystem.Path.Combine(chauffeurFolder, id)
+                                |> runPackageActions writeLineAsync'
+                                |> Async.Parallel
+
+                let _ = results
+                        |> Array.filter(fun opt -> opt.IsSome)
+                        |> Array.map(fun opt -> writeLineAsync'(sprintf "There was an issue with the action %s" opt.Value))
+                        |> Async.Parallel
+
                 return DeliverableResponse.Continue
             | _ ->
                 do! writer.WriteLineAsync("Command is known, ignoring") |> Async.AwaitTask
