@@ -26,7 +26,8 @@ let runPackageAction name (actionXml: Package.Action) (action: IPackageAction) =
 
 let runPackageActions writeLineAsync (packagePath: string) =
     let package = Package.Load packagePath
-    let packageActions = TypeFinder.FindClassesOfType<IPackageAction>()
+    let packageActions = AppDomain.CurrentDomain.GetAssemblies()
+                            |> TypeFinder.FindClassesOfType<IPackageAction>
                             |> Seq.map (fun t -> (Activator.CreateInstance t) |> castAsPackageAction)
                             |> Seq.filter (fun p -> p <> null)
 
@@ -34,8 +35,12 @@ let runPackageActions writeLineAsync (packagePath: string) =
     |> Array.filter (fun action -> action.Runat = "install")
     |> Array.map (fun action -> async {
         do! writeLineAsync (sprintf "Running action %s" action.Alias)
-        let type' = packageActions |> Seq.find (fun t -> t.Alias() = action.Alias)
-        let success = runPackageAction package.Info.Package.Name action type'
-        return match success with
-                | true -> None
-                | false -> Some(action.Alias) })
+        let type' = packageActions |> Seq.tryFind (fun t -> t.Alias() = action.Alias)
+
+        return match type' with
+                | None -> Some(action.Alias)
+                | Some t ->
+                    let success = runPackageAction package.Info.Package.Name action t
+                    match success with
+                            | true -> None
+                            | false -> Some(action.Alias) })
