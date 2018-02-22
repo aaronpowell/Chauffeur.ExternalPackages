@@ -1,0 +1,3 @@
+install y
+user change-password admin $adminpwd$
+user change-loginname admin $adminname$

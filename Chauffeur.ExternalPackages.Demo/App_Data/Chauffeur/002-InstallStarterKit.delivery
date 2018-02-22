@@ -1,0 +1,6 @@
+﻿external-package starter-kit ced954d1-8c0f-4abe-bdda-99e7a787d052
+external-package unpack ced954d1-8c0f-4abe-bdda-99e7a787d052
+pkg package -f:$ChauffeurPath$\ced954d1-8c0f-4abe-bdda-99e7a787d052-unpack
+external-package actions ced954d1-8c0f-4abe-bdda-99e7a787d052-unpack\package.xml
+content-import ced954d1-8c0f-4abe-bdda-99e7a787d052-unpack\package
+content-publish -children=True
