@@ -1,4 +1,4 @@
-## New in 1.0.0 (Unreleased)
+## New in 1.0.0 (2018/02/28)
 
 * Added support for running package actions
   * These may fail, if the action depends on `HttpContext` or another dependency that we don't pre-configure

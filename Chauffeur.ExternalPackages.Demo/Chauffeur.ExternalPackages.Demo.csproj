@@ -55,11 +55,11 @@
     <Reference Include="businesslogic, Version=1.0.6261.14292, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UmbracoCms.Core.7.5.10\lib\businesslogic.dll</HintPath>
     </Reference>
-    <Reference Include="Chauffeur, Version=0.13.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chauffeur.0.13.0-package-wi-121\lib\net45\Chauffeur.dll</HintPath>
+    <Reference Include="Chauffeur, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chauffeur.1.0.0\lib\net45\Chauffeur.dll</HintPath>
     </Reference>
-    <Reference Include="Chauffeur.Runner, Version=0.13.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chauffeur.Runner.0.13.0-package-wi-121\lib\net45\Chauffeur.Runner.exe</HintPath>
+    <Reference Include="Chauffeur.Runner, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chauffeur.Runner.1.0.0\lib\net45\Chauffeur.Runner.exe</HintPath>
     </Reference>
     <Reference Include="ClientDependency.Core, Version=1.9.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ClientDependency.1.9.2\lib\net45\ClientDependency.Core.dll</HintPath>

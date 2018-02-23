@@ -74,7 +74,7 @@
       <HintPath>..\packages\UmbracoCms.Core.7.2.5\lib\businesslogic.dll</HintPath>
     </Reference>
     <Reference Include="Chauffeur">
-      <HintPath>..\packages\Chauffeur.0.13.0-package-wi-121\lib\net45\Chauffeur.dll</HintPath>
+      <HintPath>..\packages\Chauffeur.1.0.0\lib\net45\Chauffeur.dll</HintPath>
     </Reference>
     <Reference Include="ClientDependency.Core">
       <HintPath>..\packages\ClientDependency.1.8.3.1\lib\net45\ClientDependency.Core.dll</HintPath>
