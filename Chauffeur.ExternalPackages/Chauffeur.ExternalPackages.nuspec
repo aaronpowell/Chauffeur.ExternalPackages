@@ -18,7 +18,7 @@
       <dependency id="UmbracoCms.Core" version="7.2.5" />
       <dependency id="FSharp.Core" version="4.0.0.1" />
       <dependency id="FSharp.Data" version="2.3.2" />
-      <dependency id="Chauffeur" version="0.13.0-package-wi-121" />
+      <dependency id="Chauffeur" version="1.0.0" />
     </dependencies>
   </metadata>
 </package>
