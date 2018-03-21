@@ -26,6 +26,7 @@ let testDir = "./.testresults"
 let buildMode = environVarOrDefault "buildMode" "Release"
 let isAppVeyorBuild = not (isNull (environVar "APPVEYOR"))
 let projectName = "Chauffeur.ExternalPackages"
+let wrapperProjectName = sprintf "%s.UmbracoRepositoryWrapper" projectName
 let nugetSummary = "A tool for managing packages from the Umbraco package feed using Chauffeur"
 let nugetDescription = nugetSummary
 
@@ -55,7 +56,7 @@ Target.Create "Default" Target.DoNothing
 Target.Create "AssemblyInfo" (fun _ ->
     let commitHash = Git.Information.getCurrentHash()
 
-    let attributes =
+    let fsAttributes =
         [ Fake.DotNet.AssemblyInfo.Product projectName
           Fake.DotNet.AssemblyInfo.Title "Chauffeur External Package tools"
           Fake.DotNet.AssemblyInfo.Version releaseNotes.AssemblyVersion
@@ -64,7 +65,18 @@ Target.Create "AssemblyInfo" (fun _ ->
           Fake.DotNet.AssemblyInfo.ComVisible false
           Fake.DotNet.AssemblyInfo.Metadata("githash", commitHash) ]
 
-    CreateFSharp "AssemblyInfo.fs" attributes
+    CreateFSharp "./Chauffeur.ExternalPackages/AssemblyInfo.fs" fsAttributes
+
+    let csAttributes =
+        [ Fake.DotNet.AssemblyInfo.Product wrapperProjectName
+          Fake.DotNet.AssemblyInfo.Title "Chauffeur External Package tools - wrapper for package feed"
+          Fake.DotNet.AssemblyInfo.Version releaseNotes.AssemblyVersion
+          Fake.DotNet.AssemblyInfo.FileVersion releaseNotes.AssemblyVersion
+          Fake.DotNet.AssemblyInfo.InformationalVersion releaseNotes.AssemblyVersion
+          Fake.DotNet.AssemblyInfo.ComVisible false
+          Fake.DotNet.AssemblyInfo.Metadata("githash", commitHash) ]
+
+    CreateCSharp "./Chauffeur.ExternalPackages.UmbracoRepositoryWrapper/Properties/AssemblyInfo.cs" csAttributes
       
 )
 
@@ -139,6 +151,9 @@ Target.Create "Package" Target.DoNothing
 Target.Create "Lint" (fun _ ->
     !! "**/*.fsproj"
         |> Seq.iter (FSharpLint id))
+
+"AssemblyInfo"
+    ==> "Build"
 
 "Clean"
     =?> ("BuildVersion", isAppVeyorBuild)

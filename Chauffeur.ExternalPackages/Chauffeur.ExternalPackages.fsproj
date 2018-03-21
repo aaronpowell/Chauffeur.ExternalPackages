@@ -76,6 +76,7 @@
     <None Include="starter-kit.json" />
     <None Include="Chauffeur.ExternalPackages.nuspec" />
     <Content Include="package-sample.xml" />
+    <Compile Include="InternalsVisibileTo.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AutoMapper">
